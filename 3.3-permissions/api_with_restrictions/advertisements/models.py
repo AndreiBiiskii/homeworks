@@ -23,7 +23,6 @@ class Advertisement(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    favorite = models.ManyToManyField('Favorite', related_name='favorites')
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -33,14 +32,8 @@ class Advertisement(models.Model):
 
 
 class Favorite(models.Model):
-    is_favorite = models.BooleanField(default=False)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.CASCADE)
-    # advertisement = models.ForeignKey(Advertisement, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favorites')
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='favorites')
 
 
-class MyDateFilter(filters.FilterSet):
-    date = filters.DateFromToRangeFilter()
 
-    class Meta:
-        model = Advertisement
-        fields = ['created_at', ]

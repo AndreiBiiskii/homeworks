@@ -2,9 +2,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 
-from advertisements.models import Advertisement, MyDateFilter
+from advertisements.filters import AdvertisementFilter
+from advertisements.models import Advertisement, Favorite
 from advertisements.permissions import IsOwner
-from advertisements.serializers import AdvertisementSerializer
+from advertisements.serializers import AdvertisementSerializer, FavoriteSerializer
 
 
 class AdvertisementViewSet(ModelViewSet):
@@ -12,7 +13,8 @@ class AdvertisementViewSet(ModelViewSet):
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
-    filterset_class = MyDateFilter
+    filterset_class = AdvertisementFilter
+
     # TODO: настройте ViewSet, укажите атрибуты для кверисета,
     #   сериализаторов и фильтров
 
@@ -21,3 +23,8 @@ class AdvertisementViewSet(ModelViewSet):
         if self.action in ["create", 'destroy', "update", "partial_update"]:
             return [IsAuthenticated(), IsOwner()]
         return []
+
+
+class FavoritesViewSet(ModelViewSet):
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
