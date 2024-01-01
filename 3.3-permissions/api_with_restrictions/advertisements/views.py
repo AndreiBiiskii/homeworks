@@ -14,6 +14,7 @@ class AdvertisementViewSet(ModelViewSet):
     serializer_class = AdvertisementSerializer
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     filterset_class = AdvertisementFilter
+    # Advertisement.objects.all().delete()
 
     # TODO: настройте ViewSet, укажите атрибуты для кверисета,
     #   сериализаторов и фильтров

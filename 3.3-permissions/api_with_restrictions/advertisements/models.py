@@ -13,7 +13,7 @@ class AdvertisementStatusChoices(models.TextChoices):
 class Advertisement(models.Model):
     """Объявление."""
 
-    title = models.TextField()
+    title = models.TextField(unique=True)
     description = models.TextField(default='')
     status = models.TextField(
         choices=AdvertisementStatusChoices.choices,
@@ -33,7 +33,7 @@ class Advertisement(models.Model):
 
 class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favorites')
-    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='favorites')
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='favorites', unique=True)
 
 
 
