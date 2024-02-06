@@ -1,4 +1,7 @@
--r requirements.txt
 pytest
 pytest-django
 model_bakery
+django
+djangorestframework
+django-filter
+psycopg2-binary
